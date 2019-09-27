@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="cmisServerForm" type="com.order.cc.cmis.form.CmisServerForm" />
+	</form-beans>
+	<global-exceptions />
+	<global-forwards />	
+<action-mappings>
+	<action  
+	name="cmisServerForm" 
+	path="/cmisServerAction" 
+	scope="request" 
+	parameter="method" 
+	type="org.springframework.web.struts.DelegatingActionProxy"
+	validate="false">
+	</action>
+	<action parameter="/cmisServerAction.do?method=identityVerify" path="/identityVerify" type="org.apache.struts.actions.ForwardAction" />
+	<action parameter="/cmisServerAction.do?method=codeVerify" path="/codeVerify" type="org.apache.struts.actions.ForwardAction" />
+	<action parameter="/cmisServerAction.do?method=changePhoneno" path="/changePhoneno" type="org.apache.struts.actions.ForwardAction" />
+	<action parameter="/cmisServerAction.do?method=queryRepayment" path="/queryRepayment" type="org.apache.struts.actions.ForwardAction" />
+	<action parameter="/cmisServerAction.do?method=queryLoanInfo" path="/queryLoanInfo" type="org.apache.struts.actions.ForwardAction" />
+	<action parameter="/cmisServerAction.do?method=sendMessage" path="/sendMessage" type="org.apache.struts.actions.ForwardAction" />
+	<action parameter="/cmisServerAction.do?method=getCodeAndSend" path="/getCodeAndSend" type="org.apache.struts.actions.ForwardAction" />
+	<action parameter="/cmisServerAction.do?method=serverRobot" path="/serverRobot" type="org.apache.struts.actions.ForwardAction" />
+</action-mappings>
+</struts-config>

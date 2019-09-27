@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+ -->
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd 
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.0.xsd 
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd 
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+           ">
+
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean" >
+		<property name="jndiName">
+			<value>java:comp/env/focusdb</value>
+		</property>
+    </bean>	
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	    <property name="dataSource">
+            <ref local="dataSource" />
+        </property>
+	</bean>
+	
+	 <bean id="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+        <property name="dataSource" ref="dataSource" /> 
+    </bean> 
+    <tx:annotation-driven transaction-manager="transactionManager" /> -->
+    <!-- redis配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+    	<property name="maxTotal" value="200" />  
+    	<property name="maxIdle" value="50" /> 
+    	<property name="minIdle" value="8"/> 
+    	<property name="maxWaitMillis" value="10000" />  
+    	<property name="testOnBorrow" value="true" /><!-- 向调用者输出“链接”资源时，是否检测是有有效，如果无效则从连接池中移除，并尝试获取继续获取。设为true，一个挂都不能用 -->  
+    	<property name="testOnReturn" value="true" /><!-- 向连接池“归还”链接时，是否检测“链接”对象的有效性。 -->  
+		<property name="testWhileIdle" value="true"/>
+		<property name="timeBetweenEvictionRunsMillis" value="30000"/>
+		<property name="numTestsPerEvictionRun" value="10"/>
+		<property name="minEvictableIdleTimeMillis" value="60000"/>
+	</bean> 
+    <!-- redis数据源配置 -->
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="destroy">
+    	<constructor-arg index="0" ref="jedisPoolConfig" />
+        <constructor-arg index="1" value="20.4.32.24" type="java.lang.String"/>
+        <constructor-arg index="2" value="6579" type="int" />
+        <constructor-arg index="3" value="10000" type="int" /> 
+        <!-- <constructor-arg index="4" value="123456" type="java.lang.String" />  -->
+    </bean>
+    <!-- 配置自定义的RedisAPI工具类 -->
+    <bean id="redisAPI" class="com.order.cc.util.RedisAPI">
+    	<property name="jedisPool" ref="jedisPool"></property>
+    </bean>
+    
+	<import resource="context-cmisServer.xml"/>
+ 
+</beans>

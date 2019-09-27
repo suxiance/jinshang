@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--晋商ivr需要接口-->
+	<bean name="/cmisServerAction" class="com.order.cc.cmis.action.CmisServerAction" autowire="byName" />
+	<bean id="cmisServerService" class="com.order.cc.cmis.service.CmisServerService" autowire="byName"/>
+</beans>
